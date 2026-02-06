@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cat /etc/os-release
-cd /home
-touch file.txt
-echo 'hello-world' > file.txt
+touch /tmp/file.txt
+echo 'hello-world' > /tmp/file.txt
+cat /tmp/file.txt
