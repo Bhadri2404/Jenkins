@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage("run script"){
       steps{
-        sh 'chmod 777 script.sh'
-        sh './script.sh'
+        sh 'sudo chmod 777 script.sh'
+        sh 'sudo ./script.sh'
       }
     }
   }
