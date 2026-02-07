@@ -12,7 +12,7 @@ pipeline {
     stage('Test') {
       when {
         expression {
-         BRANCH_NAME == 'Test'
+         BRANCH_NAME == 'main'
         }
       }
       steps{
