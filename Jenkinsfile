@@ -1,10 +1,19 @@
 pipeline {
   agent any
   stages {
-    stage("run script"){
+    stage('Build') {
       steps{
-        sh 'chmod 755 script.sh'
-        sh './script.sh'
+        echo 'Building the application...'
+      }
+    }
+    stage('Test') {
+      steps{
+        echo 'Running tests...'
+      }
+    }
+    stage('Deploy') {
+      steps{
+        echo 'Deploying the application...'
       }
     }
   }
