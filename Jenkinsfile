@@ -1,53 +1,64 @@
+def gv
+
 pipeline {
   agent any
+
   parameters {
-    choice(name: 'VERSION', choices: ['1.12', '1.13', '1.14'], description: 'Select the version to deploy')
+    choice(
+      name: 'VERSION',
+      choices: ['1.12', '1.13', '1.14'],
+      description: 'Select the version to deploy'
+    )
   }
+
   stages {
+
     stage('Init') {
-      steps{
+      steps {
         echo 'Initializing the pipeline...'
         script {
-        gv = load 'script.groovy'
+          gv = load 'script.groovy'
+        }
       }
     }
-    }
+
     stage('Build') {
-      steps{
+      steps {
         script {
-        gv.build()
+          gv.build()
+        }
       }
     }
-   }
+
     stage('Test') {
       when {
-        expression {
-         env.BRANCH_NAME == 'main'
+        branch 'main'
+      }
+      steps {
+        script {
+          gv.test()
         }
       }
-      steps{
-        script {
-        gv.test()
-      }
     }
-    }
+
     stage('Deploy') {
-      input(
-        message: "select the env to deploy",
-        ok: "Done"
-        parameters{
-            choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: 'Select the environment to deploy to')
-        }
-      )
-        
-    }
-      steps{
+      steps {
         script {
-        gv.deploy(params.VERSION)
+          def userInput = input {
+            message "Select the environment to deploy"
+            ok "Deploy"
+            parameters {
+              choice(
+                name: 'ENV',
+                choices: ['dev', 'staging', 'prod'],
+                description: 'Select the environment to deploy to'
+              )
+            }
+          }
+
+          gv.deploy(params.VERSION, userInput)
+        }
       }
     }
   }
 }
-
-}
-

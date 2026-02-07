@@ -6,8 +6,8 @@ def test() {
     echo 'Running tests...'
 }
 
-def deploy(version) {
+def deploy(version, envName) {
+    echo "Deploying the application version: ${version} to the ${envName} environment."
+}
 
-    echo "Deploying the application version: ${version} to the ${params.ENV} environment."
-    
-}   
+return this
