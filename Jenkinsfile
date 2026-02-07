@@ -10,7 +10,6 @@ pipeline {
         gv = load 'script.groovy'
       }
     }
-  stages {
     stage('Build') {
       steps{
         gv.build()
@@ -33,3 +32,4 @@ pipeline {
     }
   }
 }
+
