@@ -4,9 +4,16 @@ pipeline {
     choice(name: 'VERSION', choices: ['1.12', '1.13', '1.14'], description: 'Select the version to deploy')
   }
   stages {
+    stage('Init') {
+      steps{
+        echo 'Initializing the pipeline...'
+        gv = load 'script.groovy'
+      }
+    }
+  stages {
     stage('Build') {
       steps{
-        echo 'Building the application...'
+        gv.build()
       }
     }
     stage('Test') {
@@ -16,12 +23,12 @@ pipeline {
         }
       }
       steps{
-        echo 'Running tests...'
+        gv.test()
       }
     }
     stage('Deploy') {
       steps{
-        echo "Deploying the application version: ${params.VERSION}..."
+        gv.deploy(params.VERSION)
       }
     }
   }
