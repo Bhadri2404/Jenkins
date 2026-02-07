@@ -7,14 +7,18 @@ pipeline {
     stage('Init') {
       steps{
         echo 'Initializing the pipeline...'
+        script {
         gv = load 'script.groovy'
       }
     }
+    }
     stage('Build') {
       steps{
+        script {
         gv.build()
       }
     }
+   }
     stage('Test') {
       when {
         expression {
@@ -22,14 +26,19 @@ pipeline {
         }
       }
       steps{
+        script {
         gv.test()
       }
     }
+    }
     stage('Deploy') {
       steps{
+        script {
         gv.deploy(params.VERSION)
       }
     }
   }
+}
+
 }
 
